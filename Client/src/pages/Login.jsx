@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -9,14 +9,16 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import {  Card, CardContent } from '@mui/material';
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router";
 import { SERVER_LINK } from "../variables/constants";
-import auth from "../auth/auth";
+// import auth from "../auth/auth";
 import side from "../assets/side.jpg";
-
+import { auth } from "../firebase";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 const theme = createTheme();
 
 export default function Login() {
@@ -24,29 +26,127 @@ export default function Login() {
   const location = useLocation();
   const from = location.state?.from?.pathname;
 
-  //Handle Form Submit
-  const handleSubmit = async (event) => {
+  const [phone, setPhone] = useState("+91");
+  const [hasFilled, setHasFilled] = useState(false);
+  const [otp, setOtp] = useState("");
+
+  const generateRecaptcha = () => {
+    window.recaptchaVerifier = new RecaptchaVerifier(
+      "recaptcha",
+      {
+        size: "invisible",
+        callback: (response) => {
+          // reCAPTCHA solved, allow signInWithPhoneNumber.
+          // ...
+        },
+      },
+      auth
+    );
+  };
+
+  const handleSend = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const data = {
-      email: formData.get("email"),
-      password: formData.get("password"),
-      rememberMe: formData.get("rememberMe") !== null,
-    };
-    try {
-      const res = await axios.post(SERVER_LINK + "login", data);
-      const accessToken = res?.data?.accessToken;
-      const roles = res?.data?.roles;
-      auth.authenticate(accessToken);
-      if (roles === "admin") {
-        navigate(from || "/admin/dashboard", { replace: true });
-      } else if (roles === "student") {
-        navigate(from || "/", { replace: true });
-      } else if (roles === "teacher") {
-        navigate(from || "/", { replace: true });
-      }
-    } catch (err) {
-      alert("Error Login:", JSON.stringify(err));
+    setHasFilled(true);
+    generateRecaptcha();
+    let appVerifier = window.recaptchaVerifier;
+    signInWithPhoneNumber(auth, phone, appVerifier)
+      .then((confirmationResult) => {
+        // SMS sent. Prompt user to type the code from the message, then sign the
+        // user in with confirmationResult.confirm(code).
+        window.confirmationResult = confirmationResult;
+      })
+      .catch((error) => {
+        // Error; SMS not sent
+        console.log(error);
+      });
+  };
+
+  const verifyOtp = (event) => {
+    let otp = event.target.value;
+    setOtp(otp);
+
+    if (otp.length === 6) {
+      // verifu otp
+      let confirmationResult = window.confirmationResult;
+      confirmationResult
+        .confirm(otp)
+        .then((result) => {
+          // User signed in successfully.
+          let user = result.user;
+          console.log(user);
+          alert("User signed in successfully");
+          // ...
+        })
+        .catch((error) => {
+          // User couldn't sign in (bad verification code?)
+          // ...
+          alert("User couldn't sign in (bad verification code?)");
+        });
+    }
+  };
+  const renderContent = () => {
+    if (!hasFilled) {
+      return (
+        <div className="app__container">
+          <Card sx={{ width: "300px" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Typography sx={{ padding: "20px" }} variant="h5" component="div">
+                Enter your phone number
+              </Typography>
+              <form onSubmit={handleSend}>
+                <TextField
+                  sx={{ width: "240px" }}
+                  variant="outlined"
+                  autoComplete="off"
+                  label="Phone Number"
+                  value={phone}
+                  onChange={(event) => setPhone(event.target.value)}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ width: "240px", marginTop: "20px" }}
+                >
+                  Send Code
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+          <div id="recaptcha"></div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="app__container">
+          <Card sx={{ width: "300px" }}>
+            <CardContent
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+              }}
+            >
+              <Typography sx={{ padding: "20px" }} variant="h5" component="div">
+                Enter the OTP
+              </Typography>
+              <TextField
+                sx={{ width: "240px" }}
+                variant="outlined"
+                label="OTP "
+                value={otp}
+                onChange={verifyOtp}
+              />
+            </CardContent>
+          </Card>
+          <div id="recaptcha"></div>
+        </div>
+      );
     }
   };
 
@@ -88,63 +188,9 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
-            >
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    value="remember"
-                    name="rememberMe"
-                    color="primary"
-                  />
-                }
-                label="Remember me"
-              />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="/register" variant="body2">
-                    Don't have an account? Sign Up
-                  </Link>
-                </Grid>
-              </Grid>
-            </Box>
+			<img src="https://cdn-icons-png.flaticon.com/512/150/150191.png" className="w-[10vw] w-"/>
+            {renderContent()}
+            <div id="recaptcha"></div>
           </Box>
         </Grid>
       </Grid>
