@@ -916,5 +916,5 @@ module.exports = {
 			9999: "9999"
 		}
 	},
-	plugins: [require("tailwindcss-dir")(), require("@tailwindcss/line-clamp")]
+	plugins: []
 };
