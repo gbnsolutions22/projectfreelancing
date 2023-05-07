@@ -188,7 +188,7 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-			<img src="https://cdn-icons-png.flaticon.com/512/150/150191.png" className="w-[10vw] w-"/>
+			<img src="https://cdn-icons-png.flaticon.com/512/150/150191.png" className="h-40 aspect-square"/>
             {renderContent()}
             <div id="recaptcha"></div>
           </Box>
