@@ -43,7 +43,7 @@ function Home() {
           <Divider orientation="vertical" flexItem sx={{ mr: "-1px" }} />
           <Grid item xs={12} md={4}>
             <Box textAlign="center">
-                <span className="font-900 text-[#0f0] text-8xl">4.2</span>
+            <span style={numberStyle}>4.2</span>
               <Typography variant="h5">User Satisfaction</Typography>
               <Typography variant="body2">
                 Start journey with us to increase efficiency, reduce costs, and

@@ -9,7 +9,7 @@ import Unauthorized from "./pages/Unauthorized";
 import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
 import Test from "./pages/Test";
-
+import Auth from "./containers/authentication/Authorization";
 function App() {
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -24,15 +24,20 @@ function App() {
       onPaste={handleContextMenu}
     >
       <ThemeProvider theme={theme}>
-        <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/test" element={<Test />} />
-          {UserRoutes}
-          {AdminRoutes}
-          <Route path="*" element={<Navigate to="/page-not-found" replace />} />
-        </Routes>
-        <Outlet />
+        <Auth>
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/test" element={<Test />} />
+            {UserRoutes}
+            {AdminRoutes}
+            <Route
+              path="*"
+              element={<Navigate to="/page-not-found" replace />}
+            />
+          </Routes>
+          <Outlet />
+        </Auth>
       </ThemeProvider>
     </div>
   );

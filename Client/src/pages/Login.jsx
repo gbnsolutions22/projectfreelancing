@@ -9,7 +9,7 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import {  Card, CardContent } from '@mui/material';
+import { Card, CardContent } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "react-router";
 import { SERVER_LINK } from "../variables/constants";
 // import auth from "../auth/auth";
 import side from "../assets/side.jpg";
-import { auth } from "../firebase";
+import { auth, app } from "../firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 const theme = createTheme();
 
@@ -74,6 +74,7 @@ export default function Login() {
           // User signed in successfully.
           let user = result.user;
           console.log(user);
+          localStorage.setItem("AT", user.accessToken);
           alert("User signed in successfully");
           // ...
         })
@@ -188,7 +189,10 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-			<img src="https://cdn-icons-png.flaticon.com/512/150/150191.png" className="h-40 aspect-square"/>
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/150/150191.png"
+              className="h-40 aspect-square"
+            />
             {renderContent()}
             <div id="recaptcha"></div>
           </Box>
