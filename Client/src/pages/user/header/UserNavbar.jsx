@@ -198,10 +198,7 @@ export const UserNavbar = () => {
           ) : (
             <>
               <Button component={Link} underline="hover" to="/login">
-                Log in
-              </Button>
-              <Button component={Link} underline="hover" to="/register">
-                Register
+               Get In
               </Button>
             </>
           )}

@@ -18,7 +18,7 @@ import ViewResult from "../pages/admin/Result/ViewResult";
 const AdminRoutes = (
   <Route
     path="/admin"
-    element={<RequireAuth allowedRoles={["admin"]} />}
+    // element={<RequireAuth allowedRoles={["admin"]} />}
     key="Admin"
   >
     <Route element={<PageNotFound />} index />

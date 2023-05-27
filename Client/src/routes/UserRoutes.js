@@ -4,14 +4,15 @@ import ContactUs from "../pages/ContactUs";
 import PageNotFound from "../pages/PageNotFound";
 import RequireAuth from "../pages/RequireAuth";
 import Unauthorized from "../pages/Unauthorized";
-import Home from "../pages/user/home/Home";
+import WelcomePage from "../pages/user/welcomePage/WelcomePage";
 import AttemptQuiz from "../pages/user/quiz/AttemptQuiz";
 import Quiz from "../pages/user/quiz/Quiz";
 import UserLayout from "../pages/user/UserLayout";
-
+import Home from "../pages/user/homePage";
 const UserRoutes = [
   <Route element={<UserLayout />} key="UserLayout">
-    <Route path="/" element={<Home />} key="home"></Route>,
+    <Route path="/" element={<WelcomePage />} key="WelcomePage"></Route>,
+    <Route path="/home" element={<Home />} key="home"></Route>,
     <Route path="/about-us" element={<AboutUs />} key="about"></Route>,
     <Route path="/contact-us" element={<ContactUs />} key="contact"></Route>,
     <Route path="/unauthorized" element={<Unauthorized />} />,
@@ -22,6 +23,7 @@ const UserRoutes = [
     >
       <Route path="/quiz" element={<Quiz />} key="quiz"></Route>
     </Route>
+    ,
   </Route>,
   <Route element={<RequireAuth allowedRoles={["student"]} />} key="Student">
     <Route path="/quiz" key="quiz">
