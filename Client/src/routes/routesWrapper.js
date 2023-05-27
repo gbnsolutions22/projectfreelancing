@@ -7,11 +7,7 @@ const router = createBrowserRouter(routesConf);
 
 const RoutesWrapper = () => {
   const renderRoutesWrapper = () => {
-    return (
-      <RouterProvider router={router}>
-        <Outlet />
-      </RouterProvider>
-    );
+    return <RouterProvider router={router} />;
   };
 
   return renderRoutesWrapper();

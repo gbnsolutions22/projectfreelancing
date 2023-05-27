@@ -1,3 +1,4 @@
+import React from "react";
 import "./App.css";
 import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import UserRoutes from "./routes/UserRoutes";
@@ -10,6 +11,7 @@ import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
 import Test from "./pages/Test";
 import Auth from "./containers/authentication/Authorization";
+import RoutesWrapper from "./routes/routesWrapper";
 function App() {
   const handleContextMenu = (e) => {
     e.preventDefault();
@@ -24,7 +26,7 @@ function App() {
       onPaste={handleContextMenu}
     >
       <ThemeProvider theme={theme}>
-        <Auth>
+        {/* <Auth>
           <Routes>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
@@ -37,7 +39,8 @@ function App() {
             />
           </Routes>
           <Outlet />
-        </Auth>
+        </Auth> */}
+        <RoutesWrapper/>
       </ThemeProvider>
     </div>
   );

@@ -39,12 +39,12 @@ function Register() {
       email: email.value,
       password: password.value,
     };
-    const res = await axios.post(SERVER_LINK + "register", data);
-    if (res.status === 202) {
-      navigate("/login");
-    } else {
-      alert("Server Error While Creating Account! Tey Again Later");
-    }
+    // const res = await axios.post(SERVER_LINK + "register", data);
+    // if (res.status === 202) {
+    //   navigate("/login");
+    // } else {
+    //   alert("Server Error While Creating Account! Tey Again Later");
+    // }
   };
 
   return (

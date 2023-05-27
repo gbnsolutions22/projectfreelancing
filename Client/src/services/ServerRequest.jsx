@@ -4,17 +4,17 @@ import auth from "../auth/auth";
 import { SERVER_LINK } from "../variables/constants";
 
 const sendRequest = async (type, link, data = null) => {
-  const config = {
-    method: type,
-    url: SERVER_LINK + link,
-    headers: {
-      Authorization: auth.getToken(),
-    },
-    ...(data && { data }),
-  };
+  // const config = {
+  //   method: type,
+  //   url: SERVER_LINK + link,
+  //   headers: {
+  //     Authorization: auth.getToken(),
+  //   },
+  //   ...(data && { data }),
+  // };
   try {
-    const res = await axios(config);
-    return res;
+    // const res = await axios(config);
+    // return res;
   } catch (err) {
     alert("Error:", JSON.stringify(err));
   }

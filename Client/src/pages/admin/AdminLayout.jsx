@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Box, Card, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { DashboardNavbar } from "../../components/admin/dashboard-navbar";
