@@ -62,8 +62,8 @@ function Dashboard() {
   useEffect(() => {}, []);
 
   return (
-    <>
-      <AdminLayout>
+    <div className="">
+      {/* <AdminLayout> */}
         <Grid container spacing={2}>
           {cardItems.map((item) => {
             return (
@@ -120,8 +120,8 @@ function Dashboard() {
           labels={labels}
           values={values}
         />
-      </AdminLayout>
-    </>
+      {/* </AdminLayout> */}
+    </div>
   );
 }
 

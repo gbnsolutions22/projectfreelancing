@@ -3,6 +3,7 @@ import React from "react";
 import Login from "../pages/Login";
 
 import UserLayout from "../pages/user/UserLayout";
+import UserLoginLaout from "../pages/user/userLoginLayout";
 import WelcomePage from "../pages/user/welcomePage/WelcomePage";
 import AboutUs from "../pages/AboutUs";
 import ContactUs from "../pages/ContactUs";
@@ -25,21 +26,29 @@ const routes = [
         element: <WelcomePage />,
       },
       {
-        path: "about",
+        path: "about-us",
         element: <AboutUs />,
       },
       {
-        path: "Contact",
+        path: "contact-us",
         element: <ContactUs />,
       },
       {
         path: "404",
         element: <PageNotFound />,
       },
+     
+    ],
+  },
+  {
+    path: "",
+    element: <UserLoginLaout />,
+    children: [
       {
-        path: "homePage",
+        path: "home",
         element: <Home />,
       },
+     
     ],
   },
 ];
