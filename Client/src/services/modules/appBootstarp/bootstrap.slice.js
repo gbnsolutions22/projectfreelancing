@@ -7,7 +7,8 @@ const appSlice = createSlice({
   initialState,
   reducers: {
     userData: (state, action) => {
-      state.user = action.payload.data;
+      console.log(action.payload)
+      state.user = action.payload;
     },
   },
 });

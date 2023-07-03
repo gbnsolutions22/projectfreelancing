@@ -11,6 +11,7 @@ import PageNotFound from "../pages/PageNotFound";
 import RequireAuth from "../pages/RequireAuth";
 import Unauthorized from "../pages/Unauthorized";
 import Home from "../pages/user/homePage";
+import Auth from "../containers/authentication/Authorization";
 
 const routes = [
   {
@@ -37,18 +38,20 @@ const routes = [
         path: "404",
         element: <PageNotFound />,
       },
-     
     ],
   },
   {
     path: "",
-    element: <UserLoginLaout />,
+    element: (
+      <Auth>
+        <UserLoginLaout />
+      </Auth>
+    ),
     children: [
       {
         path: "home",
         element: <Home />,
       },
-     
     ],
   },
 ];

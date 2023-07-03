@@ -6,7 +6,7 @@ import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import AdminLayout from "../../admin/AdminLayout";
-
+import { useSelector } from "react-redux";
 const labels = [
   "January",
   "February",
@@ -59,67 +59,68 @@ const cardItems = [
 ];
 
 function Dashboard() {
-  useEffect(() => {}, []);
+  const data = useSelector((state) => state.bootStrap);
+  const cur=data.user?.currentUser;
+
+  useEffect(() => {
+    console.log("data", cur);
+  }, [data]);
 
   return (
     <div className="">
       {/* <AdminLayout> */}
-        <Grid container spacing={2}>
-          {cardItems.map((item) => {
-            return (
-              <Grid item xs={12} sm={6} lg={3}>
-                <Box
-                  sx={{
-                    background: item.gradiant,
-                    borderRadius: 2,
-                    display: "flex",
-                    padding: 2,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Box textAlign="center" spacing={2}>
-                    <Avatar
-                      sx={{
-                        background: "rgba(0,0,0,.18)",
-                        width: 48,
-                        height: 48,
-                      }}
-                    >
-                      {/* <PermIdentityIcon sx={{ width: 30, height: 30 }} /> */}
-                      {item.icon}
-                    </Avatar>
-                    <br />
-                    <Typography sx={{ color: "white" }}>
-                      {item.title}
-                    </Typography>
-                  </Box>
-                  <Box textAlign="end" spacing={2}>
-                    <Typography sx={{ color: "white" }}>
-                      {item.subTitleValue}
-                    </Typography>
-                    <Typography sx={{ color: "white" }}>
-                      {item.subTitle}
-                    </Typography>
-                    <br />
-                    <Typography sx={{ color: "white" }}>
-                      {item.total}
-                    </Typography>
-                  </Box>
+      <Grid container spacing={2}>
+        {cardItems.map((item) => {
+          return (
+            <Grid item xs={12} sm={6} lg={3}>
+              <Box
+                sx={{
+                  background: item.gradiant,
+                  borderRadius: 2,
+                  display: "flex",
+                  padding: 2,
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box textAlign="center" spacing={2}>
+                  <Avatar
+                    sx={{
+                      background: "rgba(0,0,0,.18)",
+                      width: 48,
+                      height: 48,
+                    }}
+                  >
+                    {/* <PermIdentityIcon sx={{ width: 30, height: 30 }} /> */}
+                    {item.icon}
+                  </Avatar>
+                  <br />
+                  <Typography sx={{ color: "white" }}>{item.title}</Typography>
                 </Box>
-              </Grid>
-            );
-          })}
-        </Grid>
-        <BarChart
-          title="Number of Student Register in Past Months"
-          labels={labels}
-          values={values}
-        />
-        <BarChart
-          title="Number of Quiz Created in Past Months"
-          labels={labels}
-          values={values}
-        />
+                <Box textAlign="end" spacing={2}>
+                  <Typography sx={{ color: "white" }}>
+                    {item.subTitleValue}
+                  </Typography>
+                  <Typography sx={{ color: "white" }}>
+                    {item.subTitle}
+                  </Typography>
+                  <br />
+                  <Typography sx={{ color: "white" }}>{item.total}</Typography>
+                </Box>
+              </Box>
+            </Grid>
+          );
+        })}
+      </Grid>
+      <BarChart
+        title="Number of Student Register in Past Months"
+        labels={labels}
+        values={values}
+      />
+      <BarChart
+        title="Number of Quiz Created in Past Months"
+        labels={labels}
+        values={values}
+      />
       {/* </AdminLayout> */}
     </div>
   );

@@ -10,7 +10,6 @@ import Unauthorized from "./pages/Unauthorized";
 import PageNotFound from "./pages/PageNotFound";
 import Register from "./pages/Register";
 import Test from "./pages/Test";
-import Auth from "./containers/authentication/Authorization";
 import RoutesWrapper from "./routes/routesWrapper";
 function App() {
   const handleContextMenu = (e) => {
@@ -40,7 +39,7 @@ function App() {
           </Routes>
           <Outlet />
         </Auth> */}
-        <RoutesWrapper/>
+          <RoutesWrapper />
       </ThemeProvider>
     </div>
   );
